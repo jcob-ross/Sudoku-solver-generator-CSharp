@@ -1,6 +1,9 @@
 # Sudoku-solver-generator-CSharp
 
 Simple Sudoku solver and generator written in c#
+
+Currently supports 9x9 boards and multiple solutions.
+
 (wip - needs some cleanup)
 
 ```
