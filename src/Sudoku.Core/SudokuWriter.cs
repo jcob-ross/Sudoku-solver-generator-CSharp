@@ -1,10 +1,11 @@
-﻿using System;
-using System.Text;
-
-namespace Sudoku.Core
+﻿namespace Sudoku.Core
 {
-  using System.Linq;
+  using System;
+  using System.Text;
 
+  /// <summary>
+  ///   Writer for solved sudoku boards
+  /// </summary>
   public class SudokuWriter
   {
     private readonly StringBuilder _sb = new StringBuilder(81);
@@ -37,6 +38,11 @@ namespace Sudoku.Core
       return result;
     }
 
+    /// <summary>
+    ///   Creates readable, multiline version of solved sudoku board
+    /// </summary>
+    /// <param name="board"></param>
+    /// <returns></returns>
     public string GetPrettyStringRepresentation(Board board)
     {
       if (null == board)

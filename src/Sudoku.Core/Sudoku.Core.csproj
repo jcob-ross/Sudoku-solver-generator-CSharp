@@ -42,10 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
-    <Compile Include="BoardFactory.cs" />
     <Compile Include="Candidates.cs" />
     <Compile Include="Cell.cs" />
-    <Compile Include="CellBase.cs" />
     <Compile Include="NullBoard.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Sudoku.Core
 {
+  /// <summary>
+  ///   Result of a solving task
+  /// </summary>
   public class SudokuSolverResult
   {
     public class SolutionAddedEventArgs : EventArgs
@@ -24,6 +27,8 @@ namespace Sudoku.Core
     private readonly Board _originalBoard;
     private readonly List<Board> _solutions;
 
+
+    // todo - SudokuSolverResult, actually use it
     public SudokuSolverResult(Board originalBoard, CancellationTokenSource tokenSource)
     {
       if (null == originalBoard)

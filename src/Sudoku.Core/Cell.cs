@@ -3,8 +3,10 @@ namespace Sudoku.Core
   using System;
   using System.Collections.Generic;
   using System.Diagnostics;
-  using System.Runtime.CompilerServices;
 
+  /// <summary>
+  ///   Represents cell holding a value and candidate values
+  /// </summary>
   [DebuggerDisplay("Val: {Value} HasSingleCandidate: {HasSingleCandidate} Candidates: {Candidates}")]
   public struct Cell
   {
@@ -20,6 +22,10 @@ namespace Sudoku.Core
     // 0000 0000 0000 0000 0000 0000 0000 0000
     private int _data;
 
+    /// <summary>
+    ///   Creates new cell struct with specified candidate values
+    /// </summary>
+    /// <param name="candidates">Possible values for cell to hold</param>
     public Cell(Candidates candidates)
     {
       _data = (int)candidates;
@@ -68,11 +74,8 @@ namespace Sudoku.Core
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is out of range of possible candidate values.</exception>
     public void RemoveValueFromCandidates(byte value)
     {
-#if DEBUG
       if (value > NumPossibleCellValues || value < 1)
         throw new ArgumentOutOfRangeException(nameof(value));
-#endif
-
       
       // HasValue    Value     Candidate Flags
       //    |      |+++++++| |+++++++++++++++++|
@@ -112,11 +115,8 @@ namespace Sudoku.Core
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is out of range of possible candidate values</exception>
     public bool HasCandidate(byte value)
     {
-#if DEBUG
       if (value > NumPossibleCellValues || value < 1)
         throw new ArgumentOutOfRangeException(nameof(value));
-#endif
-
 
       var bitToCheck = (Candidates)(1 << (value - 1));
       return ((Candidates)_data & bitToCheck) == bitToCheck;

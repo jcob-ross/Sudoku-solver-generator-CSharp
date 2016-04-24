@@ -2,6 +2,9 @@ namespace Sudoku.Core
 {
   using System;
 
+  /// <summary>
+  ///   Represents values a cell can hold without breaking sudoku rules
+  /// </summary>
   [Flags]
   public enum Candidates : ushort
   {

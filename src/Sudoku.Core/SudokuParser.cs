@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Sudoku.Core
@@ -11,11 +10,6 @@ namespace Sudoku.Core
   {
     // everything except numeric and dot
     private readonly Regex _inputFilterRegex = new Regex("[^0-9.]", RegexOptions.Compiled | RegexOptions.CultureInvariant);
-
-    /// <summary>
-    ///   Initializes new instance of <see cref="SudokuParser"/>.
-    /// </summary>
-    public SudokuParser(){}
 
     /// <summary>
     ///   Tries to parse 9x9 sudoku board.

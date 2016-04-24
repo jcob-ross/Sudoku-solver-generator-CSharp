@@ -4,10 +4,10 @@
   using System.Collections.Generic;
   using System.Diagnostics;
   using System.Linq;
-  using System.Runtime.CompilerServices;
-  using System.Threading;
-  using System.Threading.Tasks;
 
+  /// <summary>
+  ///   Sudoku solver
+  /// </summary>
   public class SudokuSolver
   {
     public class SudokuSolverException : ArgumentException
@@ -34,14 +34,11 @@
     /// <exception cref="ArgumentException">Board is unsolvable - value placement on the board violates sudoku rules.</exception>
     public Board CreateBoard(byte[] boardValues)
     {
-#if DEBUG
       if (null == boardValues)
         throw new ArgumentNullException(nameof(boardValues));
       
       if (boardValues.Length != SupportedBoardSize)
         throw new ArgumentException("Unsupported board size", paramName: nameof(boardValues));
-#endif
-
 
       var cells = boardValues.Select(val => val > 0 ? new Cell(val) : new Cell(Candidates.All)).ToArray();
       var board = new Board(cells, width: 9, sectorWidth: 3, length: SupportedBoardSize);
@@ -95,10 +92,12 @@
     {
       Debug.Assert(originalBoard.Length == modifiedBoard.Length);
       var result = new List<int>();
-      foreach (var peerIndex in originalBoard.GetPeers(cellIndex))
+
+      var peerIndxes = originalBoard.GetPeers(cellIndex);
+      for (var i = 0; i < peerIndxes.Length; ++i)
       {
-        if (modifiedBoard.Cells[peerIndex].HasSingleCandidate && ! originalBoard.Cells[peerIndex].HasSingleCandidate)
-          result.Add(peerIndex);
+        if (modifiedBoard.Cells[peerIndxes[i]].HasSingleCandidate && !originalBoard.Cells[peerIndxes[i]].HasSingleCandidate)
+          result.Add(peerIndxes[i]);
       }
       return result;
     }
@@ -132,10 +131,11 @@
         return input;
 
       var activeCellIndex = PickCellToGuessOn(input);
-      foreach (var value in input.Cells[activeCellIndex].PossibleValues())
+      var possibleVals = input.Cells[activeCellIndex].PossibleValues();
+      for (int i = 0; i < possibleVals.Length; ++i)
       {
         Board board;
-        if ((board = PlaceValue(input, activeCellIndex, value)) != null)
+        if ((board = PlaceValue(input, activeCellIndex, possibleVals[i])) != null)
           if ((board = Solve(board)) != null)
             return board;
       }
@@ -217,10 +217,12 @@
       }
 
       var activeCellIndex = PickCellToGuessOn(input);
-      foreach (var value in input.Cells[activeCellIndex].PossibleValues())
+      var possibleVals = input.Cells[activeCellIndex].PossibleValues();
+
+      for (var i = 0; i < possibleVals.Length; ++i)
       {
         Board board;
-        if ((board = PlaceValue(input, activeCellIndex, value)) != null)
+        if ((board = PlaceValue(input, activeCellIndex, possibleVals[i])) != null)
           if ((board = Solve(board, solutionFoundFunc)) != null)
             return board;
       }

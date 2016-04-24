@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Sudoku.Core
+﻿namespace Sudoku.Core
 {
-  using System.Runtime.CompilerServices;
-  using System.Runtime.InteropServices;
+  using System;
+  using System.Collections;
+  using System.Collections.Generic;
+  using System.Linq;
 
   /// <summary>
   ///   Represents sudoku board
@@ -76,25 +73,21 @@ namespace Sudoku.Core
     {
       get
       {
-#if DEBUG
         if (x > _width - 1 || x < 0)
           throw new ArgumentOutOfRangeException(nameof(x));
 
         if (y > _width - 1 || y < 0)
           throw new ArgumentOutOfRangeException(nameof(y));
-#endif
 
         return _cells[y * _width + x];
       }
       set
       {
-#if DEBUG
         if (x > _width - 1 || x < 0)
           throw new ArgumentOutOfRangeException(nameof(x));
 
         if (y > _width - 1 || y < 0)
           throw new ArgumentOutOfRangeException(nameof(y));
-#endif
 
         _cells[y * _width + x] = value;
       }
@@ -125,7 +118,6 @@ namespace Sudoku.Core
     /// <returns><see cref="T:int[]"/> of cell indexes</returns>
     public int[] GetPeers(int cellIndex)
     {
-
       if (!PeerIndexCache.ContainsKey(cellIndex))
         PeerIndexCache.Add(cellIndex, Enumerable.Range(0, _width * _width).Where(cell => IsPeer(cellIndex, cell)).ToArray());
 
@@ -148,15 +140,16 @@ namespace Sudoku.Core
 
       board._cells[cellIndex] = new Cell(value);
 
-      foreach (var peerCellIndex in GetPeers(cellIndex))
+      var peers = GetPeers(cellIndex);
+      for (var i = 0; i < peers.Length; ++i)
       {
-        var peerCell = board._cells[peerCellIndex];
+        var peerCell = board._cells[peers[i]];
         peerCell.RemoveValueFromCandidates(value);
 
-        if (peerCell.HasValue == false && peerCell.Candidates == Candidates.None)
+        if (! peerCell.HasValue && peerCell.Candidates == Candidates.None)
           return null;
 
-        board._cells[peerCellIndex] = peerCell;
+        board._cells[peers[i]] = peerCell;
       }
       return board;
     }
@@ -180,16 +173,25 @@ namespace Sudoku.Core
       {
         if (_cells[i].HasValue)
         {
-          foreach (var peer in GetPeers(i))
-            if ((_cells[peer].HasValue && _cells[peer].Value == _cells[i].Value) || _cells[peer].HasCandidate(_cells[i].Value))
+          var peers = GetPeers(i);
+          for (var j = 0; j < peers.Length; ++j)
+          {
+            if ((_cells[peers[i]].HasValue && _cells[peers[i]].Value == _cells[i].Value) || _cells[peers[i]].HasCandidate(_cells[i].Value))
               return false;
+          }
         }
         else
         {
-          foreach (var peer in GetPeers(i))
-            foreach (var possibleValue in _cells[i].PossibleValues())
-              if (_cells[peer].HasValue && _cells[peer].Value == possibleValue)
+          var peers = GetPeers(i);
+          for (var j = 0; j < peers.Length; ++j)
+          {
+            var possibleVals = _cells[i].PossibleValues();
+            for (var k = 0; k < possibleVals.Length; ++k)
+            {
+              if (_cells[peers[j]].HasValue && _cells[peers[j]].Value == possibleVals[k])
                 return false;
+            }
+          }
         }
       }
       return true;
@@ -207,12 +209,10 @@ namespace Sudoku.Core
     /// <exception cref="ArgumentOutOfRangeException">Index is smaller than 0 -or- greater than <see cref="Board.Length"/>.</exception>
     public bool IsPeer(int indexLeft, int indexRight)
     {
-#if DEBUG
       if (indexLeft < 0 || indexLeft > _length - 1)
         throw new ArgumentOutOfRangeException(nameof(indexLeft));
       if (indexRight < 0 || indexRight > _length - 1)
         throw new ArgumentOutOfRangeException(nameof(indexRight));
-#endif
 
       if (indexLeft == indexRight)
         return false;
@@ -256,10 +256,8 @@ namespace Sudoku.Core
     /// <exception cref="ArgumentNullException"><paramref name="other"/> is <see langword="null" />.</exception>
     public bool Equals(Board other)
     {
-#if DEBUG
       if (null == other)
         throw new ArgumentNullException(nameof(other));
-#endif
 
       if (_width != other.Width || _sectorWidth != other.SectorWidth || _length != other.Length)
         return false;
