@@ -19,6 +19,6 @@ Currently supports 9x9 boards and multiple solutions.
 -b --benchmark    To run sample benchmark containing 95 very hard boards
 
 -f --file         Solves sudokus from file
-                  eg. -f=foo.bar or -file=c:\deadbeef
+                  eg. -f=foo.bar or --file=c:\deadbeef
                   Each board must be on separate line and in the same format as needed for --raw
 ```
