@@ -4,7 +4,6 @@ Simple Sudoku solver and generator written in c#
 
 Currently supports 9x9 boards and multiple solutions.
 
-(wip - needs some cleanup)
 
 ```
 # usage:
@@ -22,3 +21,6 @@ Currently supports 9x9 boards and multiple solutions.
                   eg. -f=foo.bar or --file=c:\deadbeef
                   Each board must be on separate line and in the same format as needed for --raw
 ```
+
+
+If opening in VS, use the `src/Sudoku.Windows/Sudoku.Windows.sln` file.
