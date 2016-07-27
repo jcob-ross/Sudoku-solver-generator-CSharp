@@ -217,12 +217,12 @@
       }
 
       var activeCellIndex = PickCellToGuessOn(input);
-      var possibleVals = input.Cells[activeCellIndex].PossibleValues();
+      var possibleValues = input.Cells[activeCellIndex].PossibleValues();
 
-      for (var i = 0; i < possibleVals.Length; ++i)
+      for (var i = 0; i < possibleValues.Length; ++i)
       {
         Board board;
-        if ((board = PlaceValue(input, activeCellIndex, possibleVals[i])) != null)
+        if ((board = PlaceValue(input, activeCellIndex, possibleValues[i])) != null)
           if ((board = Solve(board, solutionFoundFunc)) != null)
             return board;
       }

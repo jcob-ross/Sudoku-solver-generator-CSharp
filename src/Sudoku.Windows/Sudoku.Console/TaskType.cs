@@ -3,7 +3,7 @@ namespace Sudoku.Console
   using System;
 
   /// <summary>
-  ///   Represents type of solver task
+  ///   Represents type of task for the solver
   /// </summary>
   [Flags]
   public enum TaskType

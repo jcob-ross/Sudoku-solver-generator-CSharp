@@ -18,7 +18,7 @@ namespace Sudoku.Core
     ///   <see cref="String"/> representation of sudoku board.
     ///   <remarks>
     ///     All characters except 0 - 9 and '.' (dot) will be removed.
-    ///     Cell values are red in sequence from top-left to bottom-right board corner
+    ///     Cell values are read in sequence from top-left to bottom-right board corner
     ///   </remarks>
     /// </param>
     /// <param name="cellValues">

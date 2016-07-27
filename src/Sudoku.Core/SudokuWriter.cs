@@ -4,7 +4,7 @@
   using System.Text;
 
   /// <summary>
-  ///   Writer for solved sudoku boards
+  ///   Writer for sudoku boards
   /// </summary>
   public class SudokuWriter
   {
@@ -39,7 +39,7 @@
     }
 
     /// <summary>
-    ///   Creates readable, multiline version of solved sudoku board
+    ///   Creates human friendly, multiline version of solved sudoku board
     /// </summary>
     /// <param name="board"></param>
     /// <returns></returns>
