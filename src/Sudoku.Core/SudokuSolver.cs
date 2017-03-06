@@ -181,7 +181,7 @@
       while (true)
       {
         var emptyCells = startingBoard.Cells
-                              .Select((cell, index) => new {index, cell})
+                              .Select((cell, index) => new { index, cell })
                               .Where(t => !t.cell.HasValue && !t.cell.HasSingleCandidate)
                               .Select(t => t.index) // we need just indexes
                               .ToArray();

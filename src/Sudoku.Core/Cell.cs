@@ -38,10 +38,7 @@ namespace Sudoku.Core
     public Cell(byte value)
     {
       Debug.Assert(value > 0);
-
       _data = (1 << 28) + (value << 16);
-      //_data = 1 << 28;
-      //_data += value << 16;
     }
 
     /// <summary>

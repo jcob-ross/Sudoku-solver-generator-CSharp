@@ -38,18 +38,19 @@
             Benchmark();
             break;
           case TaskType.SolveFromCli:
-            Solve(boards, maxSolutions, false);
+            Solve(boards, maxSolutions, prettyPrint: false);
             break;
           case TaskType.SolveFromCli | TaskType.PrettyPrint:
-            Solve(boards, maxSolutions, true);
+            Solve(boards, maxSolutions, prettyPrint: true);
             break;
           case TaskType.SolveFromFile:
-            Solve(boards, maxSolutions, false);
+            Solve(boards, maxSolutions, prettyPrint: false);
             break;
           case TaskType.SolveFromFile | TaskType.PrettyPrint:
-            Solve(boards, maxSolutions, true);
+            Solve(boards, maxSolutions, prettyPrint: true);
             break;
           case TaskType.Create: // start and go on a vacation
+            throw new NotImplementedException("Board generation not supported yet.");
             CreateRandom();
             break;
 
@@ -122,10 +123,10 @@
             return TaskType.None;
 
           var numSolutionsString = arg.Substring(startIdx + 1);
-          var success = Int32.TryParse(numSolutionsString, NumberStyles.Integer, new NumberFormatInfo(),
+          var parseSuccess = Int32.TryParse(numSolutionsString, NumberStyles.Integer, new NumberFormatInfo(),
                                        out maxSolutions);
 
-          if (!success)
+          if (!parseSuccess)
             return TaskType.None;
         }
 
@@ -136,7 +137,6 @@
             return TaskType.None;
 
           var filePath = arg.Substring(startIdx + 1);
-
 
           if (! TryParseBoardsFromFile(filePath, out board))
           {
@@ -152,9 +152,6 @@
         {
           result |= TaskType.PrettyPrint;
         }
-
-        if (arg.StartsWith("--nope"))
-          return TaskType.Create;
       }
 
       return result;
@@ -261,6 +258,7 @@
 
       messages.ForEach(WriteLine);
     }
+
     private static void Benchmark()
     {
       Solve(GetSomePuzzles(), 0, false);
@@ -294,7 +292,6 @@
       GC.Collect();
       GC.WaitForPendingFinalizers();
       GC.Collect();
-
 
       for (var i = 0; i < boardsToSolve.Count; ++i)
       {

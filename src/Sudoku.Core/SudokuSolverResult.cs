@@ -28,7 +28,7 @@ namespace Sudoku.Core
     private readonly List<Board> _solutions;
 
 
-    // todo - SudokuSolverResult, actually use it
+    // NOTE(WTF?!): - what problem does this class solve? I forgot. Not used ATM.
     public SudokuSolverResult(Board originalBoard, CancellationTokenSource tokenSource)
     {
       if (null == originalBoard)
